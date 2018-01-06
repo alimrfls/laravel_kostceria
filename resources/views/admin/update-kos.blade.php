@@ -89,7 +89,7 @@
                             @for($i=1;$i<=$kos->total_foto_kos;$i++)
                                 <div class="col-md-4">
                                     <a style="float: right" href="{{url("/delete-photo/$kos->id/$i")}}"><span class="glyphicon glyphicon-remove"></span></a>
-                                    <img class="img-responsive img-thumbnail" src="/images/{{str_replace('_1',"_$i",$kos->thumbnail_kos)}}" alt="{{str_replace('_1',"_$i",$kos->thumbnail_kos)}}" style="width: 200px; height: 100px">
+                                    <img class="img-responsive img-thumbnail" src="/images/daftar_kos/{{str_replace(' ','_',$kos->nama_kos)}}/{{str_replace('_1',"_$i",$kos->thumbnail_kos)}}" alt="{{str_replace('_1',"_$i",$kos->thumbnail_kos)}}" style="width: 200px; height: 100px">
                                 </div>
                             @endfor
                         </div>

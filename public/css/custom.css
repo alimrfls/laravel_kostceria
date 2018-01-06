@@ -63,7 +63,7 @@ footer {
 
 /* Banner */
 .banner{
-    background:linear-gradient( rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.22) ), url('/images/banner.jpg');
+    background:linear-gradient( rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.22) ), url('/images/misc/banner.jpg');
     background-size: 100% 350px;
 }
 

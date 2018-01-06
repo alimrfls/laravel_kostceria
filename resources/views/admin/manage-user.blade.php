@@ -4,7 +4,12 @@
     <div class="container">
         <br><br>
         <br>
-
+        @if (session('alert'))
+            <div class="alert alert-success animated flash">
+                {{ session('alert') }}
+            </div>
+            <br>
+        @endif
         <h1>Pengaturan Pengguna</h1>
 
         <br><br>

@@ -2,6 +2,23 @@
 @section('content')
 
     <div class="container" style="margin: 6%">
+
+        @if (session('alert'))
+            <div class="alert alert-success animated flash">
+                {{ session('alert') }}
+            </div>
+            <br>
+        @endif
+
+            @if (session('wrong_alert'))
+                <div class="container animated shake">
+                    <div class="alert alert-danger">
+                        {{ session('wrong_alert')}}
+                    </div>
+                </div>
+                <br>
+            @endif
+
         <div class="col col-md-4 col-md-offset-4 well">
             <h3 style="text-align: center">Login</h3>
             <hr style="border: 0; height: 1px; background-color: lightgray">

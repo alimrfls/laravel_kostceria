@@ -10,24 +10,23 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
 Route::get('/','kosController@index');
 
-Route::get('/register',function (){
-    return view('auth.register');
-});
-Route::get('/login',function (){
-    return view('auth.login');
-});
-
-Route::get('/error-401',function (){
+Route::get('/error-401', function (){
     return view('errors.401');
 });
 
-Route::get('/error-403',function (){
+Route::get('/error-403', function (){
     return view('errors.403');
 });
 
+Route::get('/register',function (){
+    return view('auth.register');
+})->middleware('check-auth');
+
+Route::get('/login',function (){
+    return view('auth.login');
+})->middleware('check-auth');
 
 Route::get('/view/{id}','kosController@viewDetails');
 

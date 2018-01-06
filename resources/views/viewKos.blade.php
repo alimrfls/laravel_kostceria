@@ -63,6 +63,15 @@
 
     </style>
 
+    @if (session('alert'))
+        <div class="container">
+            <div class="alert alert-success animated flash">
+                {{ session('alert') }}
+            </div>
+        </div>
+        <br>
+    @endif
+
     <div class="container animated slideInUp">
 
         <div style="text-align: center">
@@ -141,7 +150,7 @@
             {{--Carousel Foto kos--}}
             <div class="col-md-offset-2">
                 @for($i=1; $i<=$show->total_foto_kos;$i++)
-                    <img class="carous img-responsive img-thumbnail animated zoomIn" src="/images/{{str_replace('_1',"_$i",$show->thumbnail_kos)}}" alt="{{str_replace('_1',"_$i",$show->thumbnail_kos)}}" style="width: 80%; height: 350px">
+                    <img class="carous img-responsive img-thumbnail animated zoomIn" src="/images/daftar_kos/{{str_replace(' ','_',$show->nama_kos)}}/{{str_replace('_1',"_$i",$show->thumbnail_kos)}}" alt="{{str_replace('_1',"_$i",$show->thumbnail_kos)}}" style="width: 80%; height: 350px">
                 @endfor
             </div>
 

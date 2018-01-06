@@ -4,8 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Auth;
-
-class AdminMiddleware
+class CheckAuth
 {
     /**
      * Handle an incoming request.
@@ -16,18 +15,9 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
-        /*Middleware untuk cek apakah role dari user adalah admin*/
-
-        if(Auth::check()){
-            $user = Auth::user();
-            if($user->role != 'admin'){
-                return redirect('/error-403');
-            }
-        }else{
-            return redirect('/error-401');
+        if (Auth::check()){
+            return redirect('/');
         }
-
-
         return $next($request);
     }
 }

@@ -16,7 +16,7 @@
         <table class="table">
             @foreach($result as $res)
                 <tr>
-                    <td><img src="images/{{$res->thumbnail_kos}}" alt="{{$res->nama_kos}}" class="img-thumbnail img-responsive" style="width: 200px; height: 100px"></td>
+                    <td><img src="images/daftar_kos/{{str_replace(' ','_',$res->nama_kos)}}/{{$res->thumbnail_kos}}" alt="{{$res->nama_kos}}" class="img-thumbnail img-responsive" style="width: 200px; height: 100px"></td>
                     <td><br><a href="{{url("/view/$res->id")}}"><h3>{{$res->nama_kos}}</h3></a></td>
                     <td style="text-align: center"><br><br>Rp {{number_format($res->harga_kos)}} /bulan</td>
                 </tr>

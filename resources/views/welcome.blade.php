@@ -17,7 +17,26 @@
         </div>
     </form>
 
+    @if (session('alert'))
+        <div class="container animated flash">
+            <div class="alert alert-success">
+                {{ session('alert') }}
+            </div>
+        </div>
+        <br>
+    @endif
+
+    @if (session('login_alert'))
+        <div class="container animated flash">
+            <div class="alert alert-success">
+                {{ session('login_alert') }} {{Auth::user()->name}}
+            </div>
+        </div>
+        <br>
+    @endif
+
     <div class="container-fluid bg-3 text-center animated jackInTheBox">
+
         <h2><strong>Daftar Kos Dekat Binus</strong></h2>
         <hr style="background-color: darkgray; height: 1px; border: 0">
         <br>
@@ -55,7 +74,7 @@
                                 </span></i> &nbsp;
                             </h5>
                             {{--Thumbnail kos pada home page--}}
-                            <img src="images/{{$kos->thumbnail_kos}}" class="img-thumbnail" style="border-radius: 10px; width:100%; height:180px" alt="Image">
+                            <img src="images/daftar_kos/{{str_replace(' ','_',$kos->nama_kos)}}/{{$kos->thumbnail_kos}}" class="img-thumbnail" style="border-radius: 10px; width:100%; height:180px" alt="Image">
                     </div>
                     </a>
                 @endforeach

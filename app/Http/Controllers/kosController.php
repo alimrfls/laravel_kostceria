@@ -71,8 +71,8 @@ class kosController extends Controller
         $idx = 1; /*Menginisialisasi jumlah foto kos dengan variabel index*/
 
         foreach ($request->file('fotokos') as $foto){
-            /*Memasukan setiap foto yang di upload ke dalam direkotri public/images/ */
-            $foto->move(public_path('images'),$namafile.'_'.$idx.'.'.$foto->getClientOriginalExtension());
+            /*Memasukan setiap foto yang di upload ke dalam direkotri public/images/daftar_kos/nama_kos */
+            $foto->move('images/daftar_kos/'.str_replace(' ','_',$request['nama']).'/',$namafile.'_'.$idx.'.'.$foto->getClientOriginalExtension());
             $newKos->thumbnail_kos = $namafile.'_1.'.$foto->getClientOriginalExtension();
 
             /*Menambah jumlah foto kos sesuai variabel index*/
@@ -83,7 +83,7 @@ class kosController extends Controller
         $newKos->total_foto_kos = $newKos->total_foto_kos-1; /*Mengurangi 1 dari jumlah fotokos karena index mulai pada angka 1*/
         $newKos->save();
 
-        return redirect('/');
+        return redirect('/')->with('alert','Kost berhasil ditambahkan');
     }
 
     public function search(Request $request){
@@ -99,10 +99,10 @@ class kosController extends Controller
         if(Auth::attempt(
             ['email' => $request['email'], 'password' => $request['password']]
         )){
-            return redirect('/');
+            return redirect('/')->with('login_alert','Selamat Datang,');
         }
 
-        return redirect('/');
+        return redirect('/login')->with('wrong_alert','Username atau password tidak valid');;
     }
 
     public function register(Request $request){
@@ -130,7 +130,7 @@ class kosController extends Controller
 
         $newUser->save();
 
-        return redirect('/login');
+        return redirect('/login')->with('alert','Akun berhasil didaftarkan! Login sekarang');
     }
 
     public function doLogout(){
@@ -151,7 +151,7 @@ class kosController extends Controller
     public function deleteUser($id){
         $user = User::find($id); /*Mengambil data user sesuai id user*/
         $user->delete(); /*Menghapus user yang dipilih sesuai id user*/
-        return redirect('/manage-user');
+        return redirect('/manage-user')->with('alert','User berhasil dihapus');
     }
 
     public function tambahRating(Request $request, $id){
@@ -180,7 +180,7 @@ class kosController extends Controller
         $rev->user_rate = $request['rating-val'];
         $rev->save();
 
-        return redirect("/view/$id");
+        return redirect("/view/$id")->with('alert','Terima Kasih, Review anda berhasil ditambahkan');
     }
 
     public function deleteKos($id){
@@ -191,9 +191,9 @@ class kosController extends Controller
 
         /*Untuk setiap foto kos akan ikut terhapus dengan kode looping dibawah*/
         for ($i=1;$i<=$foto;$i++){
-            unlink('images/'.str_replace('_1',"_$i",$kos->thumbnail_kos));
+            unlink('images/daftar_kos/'.str_replace(' ','_',$kos->nama_kos).'/'.str_replace('_1',"_$i",$kos->thumbnail_kos));
         }
-        return redirect('/manage-kos');
+        return redirect('/manage-kos')->with('alert','Kost berhasil dihapus');;
     }
 
     public function updateKos($id){
@@ -231,12 +231,12 @@ class kosController extends Controller
         $user->role = $request['role'];
         $user->save();
 
-        return redirect('/manage-user');
+        return redirect('/manage-user')->with('alert','User berhasil diperbarui');;
     }
 
     public function doUpdateKos(Request $request, $id){
 
-       /*Validator form update kos*/
+        /*Validator form update kos*/
         $rules = [
             'nama' => 'required',
             'tipe' => 'required',
@@ -276,13 +276,14 @@ class kosController extends Controller
             $newPhotoIdx = $updateKos->total_foto_kos + 1;
             foreach ($request->file('fotokos') as $foto){
                 /*File yang di upload akan dipindahkan ke direktori images didalam direktori public dengan nama sesuai nama kos dan extensi file*/
-                $foto->move(public_path('images'),str_replace('_1',"_$newPhotoIdx",$updateKos->thumbnail_kos));
+                $foto->move('images/daftar_kos/'.str_replace(' ','_',$updateKos->nama_kos).'/',str_replace('_1',"_$newPhotoIdx",$updateKos->thumbnail_kos));
+                $newPhotoIdx++;
                 $updateKos->total_foto_kos += 1; /*Menambah total foto kos*/
             }
         }
 
         $updateKos->save();
-        return redirect('/manage-kos');
+        return redirect('/manage-kos')->with('alert','Kost berhasil diperbarui');;
 
     }
 
@@ -290,12 +291,12 @@ class kosController extends Controller
 
         $kosData = KosList::find($id); /*mengambil data kos sesuai id*/
 
-        unlink('images/'.str_replace('_1',"_$photo_id",$kosData->thumbnail_kos)); /*Menghapus foto sesuai nama file didalam direktori public/images*/
+        unlink('images/daftar_kos/'.str_replace(' ','_',$kosData->nama_kos).'/'.str_replace('_1',"_$photo_id",$kosData->thumbnail_kos)); /*Menghapus foto sesuai nama file didalam direktori public/images*/
 
         /*Looping dibawah untuk merubah nama foto yang ada menjadi berurutan setelah 1 foto dihapus*/
         for ($i=($photo_id+1);$i<=$kosData->total_foto_kos;$i++){
-           rename(public_path('images/'.str_replace('_1',"_$i",$kosData->thumbnail_kos)),public_path('/images/'.str_replace('_1',"_$photo_id",$kosData->thumbnail_kos)));
-           $photo_id++;
+            rename(public_path('images/daftar_kos/'.str_replace(' ','_',$kosData->nama_kos).'/'.str_replace('_1',"_$i",$kosData->thumbnail_kos)),public_path('/images/'.str_replace('_1',"_$photo_id",$kosData->thumbnail_kos)));
+            $photo_id++;
         }
         $kosData->total_foto_kos -= 1; /*Mengurangi 1 dari total foto kos yang ada*/
 
@@ -308,7 +309,7 @@ class kosController extends Controller
         /*Mengambil data review sesuai id untuk dihapus*/
         $review = Reviews::find($id);
         $review->delete();
-        return redirect()->back();
+        return redirect()->back()->with('alert','Review berhasil dihapus. (Rating tidak berubah)');
     }
 
 }

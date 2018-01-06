@@ -6,7 +6,12 @@
         <table class="table" >
             <br><br>
             <br>
-
+            @if (session('alert'))
+                <div class="alert alert-success animated flash">
+                    {{ session('alert') }}
+                </div>
+                <br>
+            @endif
             <h1>Pengaturan Kosan</h1>
 
             <br><br>
@@ -24,7 +29,7 @@
 
             @foreach($kosan as $data)
                 <tr style="text-align: center">
-                    <td><img src="images/{{$data->thumbnail_kos}}" alt="{{$data->nama_kos}}" class="img-thumbnail img-responsive" style="width: 150px; height: 75px"></td>
+                    <td><img src="images/daftar_kos/{{str_replace(' ','_',$data->nama_kos)}}/{{$data->thumbnail_kos}}" alt="{{$data->nama_kos}}" class="img-thumbnail img-responsive" style="width: 150px; height: 50px"></td>
                     <td><h5>{{$data->nama_kos}}</h5></td>
                     <td><h5>{{$data->alamat_kos}}</h5></td>
                     <td><h5>{{$data->tipe_kos}}</h5></td>

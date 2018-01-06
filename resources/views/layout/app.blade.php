@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Kost Ceria</title>
+    <link rel="icon" href="/images/misc/kostceria.ico">
+
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/custom.css">
     <link rel="stylesheet"  type="text/css" href="/css/animate.css">
