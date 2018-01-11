@@ -16,7 +16,7 @@ class kosController extends Controller
 
     public function index(){
         /*Menampilkan kost yang ada pada halaman utama*/
-        $kost =  DB::table('koslist')->paginate(9);
+        $kost =  DB::table('koslist')->paginate(6);
         return view('welcome',['koslist' => $kost]);
     }
 
@@ -306,9 +306,15 @@ class kosController extends Controller
     }
 
     public function deleteReview($id){
-        /*Mengambil data review sesuai id untuk dihapus*/
-        $review = Reviews::find($id);
+        $review = Reviews::find($id); /*Mengambil data review sesuai id untuk dihapus*/
+
+        $koslist = KosList::find($review->id_kos); /*Mencari kost sesuai kos id yang ada di tabel review*/
+        $koslist->rating = $koslist->rating - $review->user_rate; /*Mengurangi rating kos sesuai dengan rating yang di hapus*/
+        $koslist->total_user -= 1; /*Total user yang memberi review dan rating berkurang 1*/
+
+        $koslist->save();
         $review->delete();
+
         return redirect()->back()->with('alert','Review berhasil dihapus. (Rating tidak berubah)');
     }
 

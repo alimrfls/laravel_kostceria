@@ -12,6 +12,11 @@
 */
 Route::get('/','kosController@index');
 
+
+Route::get('/about', function (){
+    return view('about');
+});
+
 Route::get('/error-401', function (){
     return view('errors.401');
 });
@@ -20,6 +25,7 @@ Route::get('/error-403', function (){
     return view('errors.403');
 });
 
+/*==========================================================================*/
 Route::get('/register',function (){
     return view('auth.register');
 })->middleware('check-auth');
@@ -27,12 +33,14 @@ Route::get('/register',function (){
 Route::get('/login',function (){
     return view('auth.login');
 })->middleware('check-auth');
+/*==========================================================================*/
 
 Route::get('/view/{id}','kosController@viewDetails');
-
 Route::post('/doLogin','kosController@login');
 Route::post('/doRegister','kosController@register');
 Route::post('/search','kosController@search');
+
+/*==========================================================================*/
 
 Route::group(['middleware' => 'user-mdw'], function (){
 
@@ -40,6 +48,8 @@ Route::group(['middleware' => 'user-mdw'], function (){
     Route::post('/tambah-rating/{id}','kosController@tambahRating');
 
 });
+/*==========================================================================*/
+
 
 Route::group(['middleware' => 'admin-mdw'], function (){
 

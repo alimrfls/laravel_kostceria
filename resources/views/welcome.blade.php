@@ -7,7 +7,7 @@
         {{csrf_field()}}
         <div class="container-fluid jumbotron" style="padding:0;margin-top:0">
             <div class="container-fluid jumbotron text-center banner">
-                <h1 style="color:#fff;">Cari Kos Murah Sekitar Binus?</h1>
+                <h1 style="color:#fff;">Cari Kos Sekitar Binus?</h1>
                 <div>
                     <input type="text" name="katakunci" id="search" placeholder="Cari disini" required><br />
                     <div style="clear:both;"></div><br />

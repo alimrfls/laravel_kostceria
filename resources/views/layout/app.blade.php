@@ -28,19 +28,32 @@
             @if(Auth::check())
                 <ul class="nav navbar-nav navbar-left">
                     <li><a href="/">Home</a></li>
-                    @if(Auth::user()->role == "admin")
-                        <li><a href="{{url('/manage-user')}}">Manage User <i class="glyphicon glyphicon-pencil"></i></a></li>
-                        <li><a href="{{url('/manage-kos')}}">Manage Kosan <i class="glyphicon glyphicon-pencil"></i></a></li>
-                        <li><a href="{{url('/tambah-kos')}}">Tambah kosan <i class="glyphicon glyphicon-plus"></i></a></li>
-                    @endif
+                    <li><a href="/about" >About</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a class="infinite animated jello" href="">Hello, {{Auth::user()->name}} <span class="glyphicon glyphicon-user"></span></a></li>
-                    <li><a href="{{url('/logout')}}">Logout <span class="glyphicon glyphicon-log-out"></span></a></li>
+                    @if(Auth::user()->role == "admin")
+                    <li><a data-toggle="dropdown" class="dropdown-toggle animated jello" href="">Hello, {{Auth::user()->name}} <span class="glyphicon glyphicon-user"></span><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                                <li><a href="{{url('/manage-user')}}">Manage User <i class="glyphicon glyphicon-pencil"></i></a></li>
+                                <li><a href="{{url('/manage-kos')}}">Manage Kosan <i class="glyphicon glyphicon-pencil"></i></a></li>
+                                <li><a href="{{url('/tambah-kos')}}">Tambah kosan <i class="glyphicon glyphicon-plus"></i></a></li>
+                                <li><hr style="border: 0; background-color: darkgray; height: 1px;"></li>
+                                <li><a href="{{url('/logout')}}">Logout <span class="glyphicon glyphicon-log-out"></span></a></li>
+                        </ul>
+                    </li>
+                    @else
+                        <li><a class="animated jello" href="">Hello, {{Auth::user()->name}} <span class="glyphicon glyphicon-user"></span></a></li>
+                    @endif
+
+
+                    @if(Auth::user()->role=='user')
+                        <li><a href="{{url('/logout')}}">Logout <span class="glyphicon glyphicon-log-out"></span></a></li>
+                    @endif
                 </ul>
             @else
                 <ul class="nav navbar-nav navbar-left">
                     <li><a href="/">Home</a></li>
+                    <li><a href="/about">About</a></li>
                 </ul>>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="{{url('/register')}}"><span class="glyphicon glyphicon-user"></span> Daftar</a></li>
@@ -89,17 +102,19 @@
 @yield('content')
 
 
-<footer class="container-fluid text-center">
-    <p>Copyright &copy; KostCeria <span id="lifetime"></span></p>
-    <script type="text/javascript">
-        var year=(new Date().getFullYear());
-        if(year==2017 ? $("#lifetime").html(year) : $("#lifetime").html("2017 - "+year));
+<footer class="container-fluid">
+    <div style="margin-top: 20px;margin-bottom: 20px">
+        <p>Copyright &copy; KostCeria <span id="lifetime"></span></p>
+        <script type="text/javascript">
+            var year=(new Date().getFullYear());
+            if(year==2017 ? $("#lifetime").html(year) : $("#lifetime").html(year));
 
-        function kostceriaInit(){
-            showFlag.checked=false;
-        }
-        //kostceriaInit();
-    </script>
+            function kostceriaInit(){
+                showFlag.checked=false;
+            }
+            //kostceriaInit();
+        </script>
+    </div>
 </footer>
 </body>
 </html>
